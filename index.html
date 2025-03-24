@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Asset Management</title>
+    <!-- <link rel="stylesheet" href="./Assests-Manag.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+       /* Global Reset and Variables */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --success-color: #16a34a;
+    --danger-color: #dc2626;
+    --warning-color: #d97706;
+    --background-color: #f8fafc;
+    --text-color: #1e293b;
+    --border-color: #e2e8f0;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Container and Layout */
+.container {
+    /* max-width: 1200px; */
+    width: 100%;
+    /* margin: 0 auto; */
+    padding: 2rem;
+}
+
+.hr-section {
+    background: white;
+    border-bottom-right-radius: 12px ;
+    border-bottom-left-radius: 12px;
+    /* border-radius: 12px; */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Header Styles */
+.header {
+  background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+  color: white;
+  padding: 30px;
+  text-align: center;
+  border-top-right-radius: 12px ;
+  border-top-left-radius: 12px;
+}
+
+.logo {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    animation: slideDown 0.5s ease-out;
+}
+
+.tagline {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+/* Filters Section */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 15px;
+}
+
+#searchInput {
+    padding: 8px 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.3s ease;
+    flex: 2; /* Makes it occupy more width */
+    min-width: 880px; /* Prevents it from getting too small */
+}
+
+#searchInput::placeholder {
+    color: #999;
+}
+
+#searchInput:hover {
+    border-color: #007bff;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #0056b3;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+select, input {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all var(--transition-speed);
+    min-width: 160px;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Table Styles */
+.table-container {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.requests-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.requests-table th,
+.requests-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.requests-table th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #475569;
+}
+
+.requests-table tr {
+    transition: background-color var(--transition-speed);
+}
+
+.requests-table tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-approved {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-rejected {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all var(--transition-speed);
+}
+
+.btn i {
+    font-size: 0.9em;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #15803d;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #b91c1c;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease-out;
+}
+
+.close {
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #64748b;
+    transition: color var(--transition-speed);
+}
+
+.close:hover {
+    color: red;
+}
+
+/* Request Details Styles */
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    gap: 1rem; /* Add space between label and content */
+}
+
+.detail-row strong {
+    flex: 0 0 120px; /* Fixed width for labels */
+}
+
+.detail-row span,
+.detail-row p {
+    flex: 1; /* Takes remaining space */
+}
+
+.reason-text {
+    margin-top: 0.5rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 70%;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Claim History Styles */
+.claim-history {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.history-item {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    transition: transform var(--transition-speed);
+}
+
+.history-item:hover {
+    transform: translateX(4px);
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 1rem 2rem;
+    background-color: #1e293b;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transform: translateY(1rem);
+    transition: all var(--transition-speed);
+    z-index: 1100;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(1rem);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .hr-section {
+        padding: 1rem;
+    }
+    
+    .list-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filters {
+        flex-direction: column;
+    }
+    
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .modal-content {
+        margin: 1rem;
+        padding: 1rem;
+        max-height: 85vh;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .detail-row strong {
+        flex: none;
+    }
+    
+    .reason-text {
+        max-width: 100%;
+    }
+    #searchInput {
+        min-width: 300px; /* Further reduces the min-width */
+        padding: 8px 12px; /* Adjust padding for mobile */
+    }
+    .filters {
+        gap: 0.5rem;
+    }
+    select, input {
+        min-width: 100%; /* Full width for input/select */
+    }
+}
+
+/* Print Styles */
+@media print {
+    .btn, .filters, .notification {
+        display: none;
+    }
+    
+    .container {
+        padding: 0;
+    }
+    
+    .hr-section {
+        box-shadow: none;
+    }
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 4px;
+    background: #4CAF50;
+    color: white;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.notification.error {
+    background: #f44336;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">HR ASSET MANAGEMENT</h1>
+            <!-- <p class="tagline">Manage and track employee asset requests efficiently</p> -->
+        </header>
+        <section class="hr-section">
+            <div class="requests-list">
+                <h2>ASSET REQUEST</h2>
+                <div class="list-header">
+                    <div class="filters">
+                        <select id="statusFilter" onchange="filterRequests()">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <input type="text" id="searchInput" placeholder="Search by Employee ID" onkeyup="filterRequests()">
+                        <button onclick="clearAllRecords()" class="btn btn-danger btn-clear">Clear All Records</button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table class="requests-table">
+                        <thead>
+                            <tr>
+                                <th>Request ID</th>
+                                <th>Employee ID</th>
+                                <th>Asset Type</th>
+                                <th>Request Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Updated Modal -->
+        <div id="detailsModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeDetailsModal()">&times;</span>
+                <h2 style="margin-bottom: 10px;">Request Details</h2><hr style="margin-bottom: 20px;">
+                <div id="requestDetails" class="request-details">
+                </div>
+                <div id="actionButtons" class="action-buttons">
+                    <!-- Buttons will be added dynamically -->
+                </div>
+                <div id="claimHistory" class="claim-history">
+                    <h3>Claim History</h3>
+                    <div id="historyContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+      // Initialize global variables
+let requests = [];
+let selectedRequestId = null;
+let isClearing = false; // Flag to prevent duplicate alerts
+
+// Initialize page when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    loadRequestsFromStorage();
+    loadRequests();
+    setupEventListeners();
+});
+
+// Setup all event listeners
+function setupEventListeners() {
+    const statusFilter = document.getElementById('statusFilter');
+    if (statusFilter) {
+        statusFilter.addEventListener('change', filterRequests);
+    }
+
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', filterRequests);
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('detailsModal');
+        if (event.target === modal) {
+            closeDetailsModal();
+        }
+    };
+
+    // Clear button event
+    const clearButton = document.querySelector('.btn-clear');
+    if (clearButton) {
+        clearButton.onclick = clearAllRecords; // Using onclick instead of addEventListener
+    }
+
+    // Storage event listener
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'assetRequests' && !isClearing) {
+            loadRequestsFromStorage();
+            loadRequests();
+        }
+    });
+}
+
+function loadRequestsFromStorage() {
+    const storedRequests = JSON.parse(localStorage.getItem('assetRequests')) || [];
+    
+    // Filter out inactive requests and duplicates
+    const existingIds = new Set();
+    requests = storedRequests.filter(request => {
+        if (existingIds.has(request.id) || !request.isActive) {
+            return false;
+        }
+        existingIds.add(request.id);
+        return true;
+    });
+    
+    localStorage.setItem('assetRequests', JSON.stringify(requests));
+}
+
+function loadRequests() {
+    const tableBody = document.getElementById('requestsTableBody');
+    const statusFilter = document.getElementById('statusFilter').value;
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    
+    let filteredRequests = [...requests];
+    
+    if (statusFilter !== 'all') {
+        filteredRequests = filteredRequests.filter(r => r.status === statusFilter);
+    }
+    
+    if (searchTerm) {
+        filteredRequests = filteredRequests.filter(r => 
+            r.employeeId.toLowerCase().includes(searchTerm)
+        );
+    }
+
+    filteredRequests.sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate));
+
+    tableBody.innerHTML = '';
+    
+    if (filteredRequests.length === 0) {
+        const noRecordsRow = document.createElement('tr');
+        noRecordsRow.innerHTML = `
+            <td colspan="6" style="text-align: center; padding: 2rem;">
+                <div style="color: #64748b; font-size: 1.1rem;">
+                    <i class="fas fa-search" style="margin-right: 10px;"></i>
+                    No Records Found
+                </div>
+            </td>
+        `;
+        tableBody.appendChild(noRecordsRow);
+        return;
+    }
+
+    filteredRequests.forEach(request => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${request.id}</td>
+            <td>${request.employeeId}</td>
+            <td>
+                <i class="fas fa-${getAssetIcon(request.assetType)}"></i>
+                ${capitalizeFirstLetter(request.assetType)}
+            </td>
+            <td>${formatDate(request.requestDate)}</td>
+            <td><span class="status-badge status-${request.status}">${capitalizeFirstLetter(request.status)}</span></td>
+            <td>
+                <button onclick="viewRequest(${request.id})" class="btn btn-primary btn-sm">
+                    <i class="fas fa-eye"></i> View
+                </button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+function viewRequest(requestId) {
+    selectedRequestId = requestId;
+    const request = requests.find(r => r.id === requestId);
+    
+    if (!request) {
+        showNotification('Request not found', 'error');
+        return;
+    }
+    
+    const detailsDiv = document.getElementById('requestDetails');
+    detailsDiv.innerHTML = `
+        <div class="detail-row">
+            <strong>Request ID:</strong>
+            <span>${request.id}</span>
+        </div>
+        <div class="detail-row">
+            <strong>Employee ID:</strong>
+            <span>${request.employeeId}</span>
+        </div>
+        <div class="detail-row">
+            <strong>Asset Type:</strong>
+            <span>
+                <i class="fas fa-${getAssetIcon(request.assetType)}"></i>
+                ${capitalizeFirstLetter(request.assetType)}
+            </span>
+        </div>
+        <div class="detail-row">
+            <strong>Request Date:</strong>
+            <span>${formatDate(request.requestDate)}</span>
+        </div>
+        <div class="detail-row">
+            <strong>Status:</strong>
+            <span class="status-badge status-${request.status}">
+                ${capitalizeFirstLetter(request.status)}
+            </span>
+        </div>
+        <div class="detail-row">
+            <strong>Reason:</strong>
+            <p class="reason-text">${request.reason || 'No reason provided'}</p>
+        </div>
+    `;
+
+    displayClaimHistory(request.employeeId);
+
+    const actionButtons = document.getElementById('actionButtons');
+    if (request.status === 'pending') {
+        actionButtons.innerHTML = `
+            <button onclick="approveRequest()" class="btn btn-success">
+                <i class="fas fa-check"></i> Approve
+            </button>
+            <button onclick="rejectRequest()" class="btn btn-danger">
+                <i class="fas fa-times"></i> Reject
+            </button>
+        `;
+    } else {
+        actionButtons.innerHTML = `
+            <div class="status-message">
+                This request has been ${request.status}
+            </div>
+        `;
+    }
+
+    document.getElementById('detailsModal').style.display = 'block';
+}
+
+function displayClaimHistory(employeeId) {
+    const historyContent = document.getElementById('historyContent');
+    const employeeRequests = requests.filter(r => r.employeeId === employeeId);
+    
+    if (employeeRequests.length === 0) {
+        historyContent.innerHTML = '<p>No claim history found</p>';
+        return;
+    }
+
+    historyContent.innerHTML = employeeRequests
+        .sort((a, b) => new Date(b.requestDate) - new Date(a.requestDate))
+        .map(request => `
+            <div class="history-item">
+                <p><strong>Request ID:</strong> ${request.id}</p>
+                <p><strong>Asset:</strong> ${capitalizeFirstLetter(request.assetType)}</p>
+                <p><strong>Date:</strong> ${formatDate(request.requestDate)}</p>
+                <p><strong>Status:</strong> 
+                    <span class="status-badge status-${request.status}">
+                        ${capitalizeFirstLetter(request.status)}
+                    </span>
+                </p>
+            </div>
+        `).join('');
+}
+
+function updateRequestStatus(status) {
+    const message = status === 'approved' 
+        ? 'Are you sure you want to approve this request?' 
+        : 'Are you sure you want to reject this request?';
+        
+    const userConfirmed = confirm(message);
+    
+    if (userConfirmed) {
+        const requestIndex = requests.findIndex(r => r.id === selectedRequestId);
+        if (requestIndex !== -1) {
+            requests[requestIndex].status = status;
+            requests[requestIndex].statusUpdateDate = new Date().toISOString();
+            
+            localStorage.setItem('assetRequests', JSON.stringify(requests));
+            loadRequests();
+            
+            viewRequest(selectedRequestId);
+            showNotification(`Request ${status} successfully`);
+        }
+    }
+}
+
+function approveRequest() {
+    updateRequestStatus('approved');
+}
+
+function rejectRequest() {
+    updateRequestStatus('rejected');
+}
+
+function clearAllRecords() {
+    if (isClearing) return; // Prevent multiple executions
+    
+    isClearing = true;
+    const userConfirmed = confirm('Are you sure you want to clear all records? This action cannot be undone.');   
+    
+    if (userConfirmed) {
+        localStorage.removeItem('assetRequests');
+        requests = [];
+        loadRequests();
+        showNotification('All records have been cleared');
+    }
+    
+    setTimeout(() => {
+        isClearing = false;
+    }, 1000); // Reset flag after 1 second
+}
+
+function closeDetailsModal() {
+    document.getElementById('detailsModal').style.display = 'none';
+    selectedRequestId = null;
+}
+
+function filterRequests() {
+    loadRequests();
+}
+
+// Utility Functions
+function getAssetIcon(assetType) {
+    const icons = {
+        laptop: 'laptop',
+        monitor: 'desktop',
+        keyboard: 'keyboard',
+        mouse: 'mouse',
+        headphones: 'headphones',
+        chair: 'chair',
+        phone: 'mobile-alt',
+        tablet: 'tablet-alt'
+    };
+    return icons[assetType] || 'question';
+}
+
+function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
+
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+    </script>
+</body>
+</html>
